@@ -1,5 +1,7 @@
 # SteadierState
-This is a modified version of steadier state to provide compatibility with Windows 10. See steadierstate.com for the original work developed by Mark Minasi.
+This is a modified version of Steadier State V2 to provide compatibility with Windows 10 and 11. See steadierstate.com by Mark Minasi and 7heMC on Github.
+
+This is a slow progress, but I have a need to update this code and carry the features forward into modern ADKs and Windows versions. I have tested this with LTSC releases, as this would be preferred since VHD images don't like to do feature release updates and requires you to rebuild the host image or boot it with HyperV, update and migrate again to the host.
 
 ## Instructions
 Essentially there are four phases in the SteadierState model and they are as follows:
