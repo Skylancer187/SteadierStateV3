@@ -145,7 +145,7 @@
 	echo You have chosen to install the Windows 10 ADK. I will now download
 	echo it using bitsadmin and install it to the default location.
 	set _adkcheckcount=1
-	bitsadmin /transfer adksetup /priority normal http://go.microsoft.com/fwlink/p/?LinkId=526740 %systemdrive%\srs\adksetup.exe
+	bitsadmin /transfer adksetup /priority normal https://go.microsoft.com/fwlink/?linkid=2289980 %systemdrive%\srs\adksetup.exe
 	start %systemdrive%\srs\adksetup.exe /features OptionId.DeploymentTools OptionId.WindowsPreinstallationEnvironment /ceip off /q
 	echo Please wait while the adk is installed. This can take a very
 	echo long time. We will check every 10 seconds to see when the install is
@@ -751,3 +751,5 @@
 	echo.
 	echo Exiting...
 	echo.
+
+Pause
