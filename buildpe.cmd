@@ -588,6 +588,9 @@
 	echo @echo Windows 7, 8, 8.1 and 10. The source can be found at >> "%_buildpepath%\mount\windows\system32\startnet.cmd"
 	echo @echo https://github.com/7heMC/SteadierState >> "%_buildpepath%\mount\windows\system32\startnet.cmd"
 	echo Copied Steadier State files. >>%_logdir%\startlog.txt
+	REM Add PowerShell to WinPE
+	dism /Image:%_buildpepath% /Add-Package /PackagePath:%ADK_PATH%Windows Preinstallation Environment\WinPE_OCs\amd64\WinPE-PowerShell.cab
+	dism /Image:%_buildpepath% /Add-Package /PackagePath:%ADK_PATH%Windows Preinstallation Environment\WinPE_OCs\amd64\en-us\WinPE-PowerShell_en-us.cab
 
 :unmountwim
 	rem
@@ -751,3 +754,5 @@
 	echo.
 	echo Exiting...
 	echo.
+
+Pause
