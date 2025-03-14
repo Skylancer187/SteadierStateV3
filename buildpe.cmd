@@ -24,15 +24,12 @@
 	rem		on any Windows 7 or newer system. If it is not found, we will
 	rem		ask to install it. Previous versions are listed here as well,
 	rem		but are untested and should not be used with this script.
-	rem		Windows 7 WAIK:
-	rem		http://www.microsoft.com/en-us/download/details.aspx?id=5753
-	rem		Windows 8 ADK:
-	rem		http://www.microsoft.com/en-us/download/details.aspx?id=30652
-	rem		Windows 8.1 ADK:
-	rem		http://www.microsoft.com/en-US/download/details.aspx?id=39982
-	rem		Windows 10 ADK:
-	rem		https://msdn.microsoft.com/en-us/windows/hardware/dn913721.aspx
-	rem
+	rem		More Information:
+	rem		https://learn.microsoft.com/en-us/windows-hardware/get-started/adk-install
+	rem		Windows 10/11 ADK:
+	rem		https://go.microsoft.com/fwlink/?linkid=2289980
+	rem		Addon:
+	rem		https://go.microsoft.com/fwlink/?linkid=2289981
 	rem
 	rem Provide user with background information about buildpe.cmd
 	rem
@@ -140,13 +137,16 @@
 
 :adkinstall
 	rem
-	rem Download and install the Windows 10 ADK
+	rem Download and install the Windows 10/11 ADK
 	rem
-	echo You have chosen to install the Windows 10 ADK. I will now download
+	echo You have chosen to install the Windows 10/11 ADK. I will now download
 	echo it using bitsadmin and install it to the default location.
 	set _adkcheckcount=1
 	bitsadmin /transfer adksetup /priority normal https://go.microsoft.com/fwlink/?linkid=2289980 %systemdrive%\srs\adksetup.exe
 	start %systemdrive%\srs\adksetup.exe /features OptionId.DeploymentTools OptionId.WindowsPreinstallationEnvironment /ceip off /q
+	set _adkcheckcount=1
+	bitsadmin /transfer adksetup /priority normal https://go.microsoft.com/fwlink/?linkid=2289981 %systemdrive%\srs\winpesetup.exe
+	start %systemdrive%\srs\winpesetup.exe /ceip off /q
 	echo Please wait while the adk is installed. This can take a very
 	echo long time. We will check every 10 seconds to see when the install is
 	echo completed. The progress bar will continue until finished.
