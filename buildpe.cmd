@@ -589,8 +589,19 @@
 	echo @echo https://github.com/7heMC/SteadierState >> "%_buildpepath%\mount\windows\system32\startnet.cmd"
 	echo Copied Steadier State files. >>%_logdir%\startlog.txt
 	REM Add PowerShell to WinPE
-	dism /Image:%_buildpepath% /Add-Package /PackagePath:%ADK_PATH%Windows Preinstallation Environment\WinPE_OCs\amd64\WinPE-PowerShell.cab
-	dism /Image:%_buildpepath% /Add-Package /PackagePath:%ADK_PATH%Windows Preinstallation Environment\WinPE_OCs\amd64\en-us\WinPE-PowerShell_en-us.cab
+	dism /Image:%_buildpepath%\mount /Add-Package /PackagePath:%ADK_PATH%Windows Preinstallation Environment\WinPE_OCs\amd64\WinPE-PowerShell.cab
+	dism /Image:%_buildpepath%\mount /Add-Package /PackagePath:%ADK_PATH%Windows Preinstallation Environment\WinPE_OCs\amd64\en-us\WinPE-PowerShell_en-us.cab
+	REM Set the path to the mounted WinPE WIM
+	REM Set the path to the new wallpaper image in the current directory
+	set WALLPAPER_PATH=%~dp0WinPE.jpg
+	REM Copy the new wallpaper to the WinPE mount
+	copy "%WALLPAPER_PATH%" "%_buildpepath%\mount\Windows\System32\winpe.jpg"
+	REM Update the registry to use the new wallpaper
+	reg load HKLM\WinPE "%_buildpepath%\mount\Windows\System32\config\system"
+	reg add "HKLM\WinPE\ControlSet001\Control\Desktop" /v Wallpaper /t REG_SZ /d "%SystemRoot%\System32\winpe.jpg" /f
+	reg unload HKLM\WinPE
+
+echo Wallpaper updated successfully!
 
 :unmountwim
 	rem
