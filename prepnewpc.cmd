@@ -59,6 +59,12 @@
 		goto :extdrivequestion
 	)
 	if not exist %_extdrive%\scratch md %_extdrive%\scratch
+	rem
+	rem Collect the drive number to setup for SteadierState.
+	rem Recorded in the variable disknumber
+	echo.
+	echo set /p diskNumber=Please enter the disk number to use for Steadier State:
+	echo. 
 
 :warnings
 	rem
@@ -68,7 +74,7 @@
 	echo ===============================================================
 	pause
 	cls
-	echo After wiping disk 0, it will install a 2GB Windows boot
+	echo After wiping disk %diskNumber%, it will install a 2GB Windows boot
 	if %_firmware%==uefi (
 		echo Next, we will create a 500MB uefi partition, that will contain
 	)
@@ -142,7 +148,7 @@
 	rem
 	echo.
 set /p _disknum=Disk Number: 
-echo select disk %_disknum% >%_actdrive%\makesrs.txt
+echo select disk %diskNumber% >%_actdrive%\makesrs.txt
 	if %_firmware%==uefi echo convert gpt >>%_actdrive%\makesrs.txt
 	echo create partition primary size=2000 >>%_actdrive%\makesrs.txt
 	if %_firmware%==bios echo active >>%_actdrive%\makesrs.txt
@@ -191,7 +197,7 @@ echo select disk %_disknum% >%_actdrive%\makesrs.txt
 	rem
 	echo.
 set /p _disknum=Disk Number: 
-echo select disk %_disknum% >%_actdrive%\makesrs.txt
+echo select disk %diskNumber% >%_actdrive%\makesrs.txt
 	echo create partition efi size=500 >>%_actdrive%\makeefi.txt
 	echo format quick fs=fat32 label="SYSTEM_UEFI" >>%_actdrive%\makeefi.txt
 	echo assign letter=%_efidrive% >>%_actdrive%\makeefi.txt
@@ -215,7 +221,7 @@ echo select disk %_disknum% >%_actdrive%\makesrs.txt
 	rem
 	echo.
 set /p _disknum=Disk Number: 
-echo select disk %_disknum% >%_actdrive%\makesrs.txt
+echo select disk %diskNumber% >%_actdrive%\makesrs.txt
 	echo create partition msr size=200 >>%_actdrive%\makemsr.txt
 	echo exit >>%_actdrive%\makemsr.txt
 	diskpart /s %_actdrive%\makemsr.txt
@@ -255,7 +261,7 @@ echo select disk %_disknum% >%_actdrive%\makesrs.txt
 	rem
 	echo.
 set /p _disknum=Disk Number: 
-echo select disk %_disknum% >%_actdrive%\makesrs.txt
+echo select disk %diskNumber% >%_actdrive%\makesrs.txt
 	diskpart /s %_actdrive%\makephy.txt
 	set _makephyrc=%errorlevel%
 	if %_makephyrc%==0 (
